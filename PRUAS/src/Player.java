@@ -1,16 +1,22 @@
 public class Player implements Healable {
     private String name;
     private int maxHp;
+    private int Hp;
     private int attack;
     private int coin;
     private int lives;
 
     public Player(String name) {
         this.name = name;
+        this.Hp = 60;
         this.maxHp = 60;
         this.attack = 20;
         this.coin = 0;
         this.lives = 3;
+    }
+
+    public void resetHp() {
+        Hp = maxHp;
     }
 
     public String getName() {
@@ -22,7 +28,7 @@ public class Player implements Healable {
     }
 
     public int getHp() {
-        return maxHp;
+        return Hp;
     }
 
     public int getAttack() {
@@ -44,6 +50,7 @@ public class Player implements Healable {
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
     }
+
 
     public void increaseCoin(int amount) {
         coin += amount;
@@ -69,26 +76,26 @@ public class Player implements Healable {
     }
     @Override
     public void takeDamage(int damage) {
-        maxHp -= damage;
-        if (maxHp < 0) {
-            maxHp = 0;
+        Hp -= damage;
+        if (Hp < 0) {
+            Hp = 0;
         }
     }
     @Override
     public boolean isDefeated() {
-        return maxHp <= 0;
+        return Hp <= 0;
     }
 
     @Override
-    public void addCoin() {
-        coin++;
+    public void addCoin(int RewardValue) {
+        coin+=RewardValue;
     }
 
     @Override
     public void Heal(int amount) {
-        maxHp += amount;
-        if (maxHp > 60) {
-            maxHp = 60;
+        Hp += amount;
+        if (Hp > 60) {
+            Hp = 60;
         }
     }
 }

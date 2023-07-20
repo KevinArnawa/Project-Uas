@@ -12,6 +12,7 @@ public class Main {
         System.out.print("Silahkan Masukkan Nama: ");
         String p_nama = in.next();
         Player player = new Player(p_nama);
+        player.resetHp();
 
         // Pemberian atribut creature
         Creature[] npc = {
@@ -19,6 +20,10 @@ public class Main {
                 new Wolf(),
                 new Dragon()
         };
+
+        for (Creature enemy : npc) {
+            enemy.resetHp();
+        }
 
         // Main menu
         boolean quit = false;
@@ -46,7 +51,9 @@ public class Main {
                     if (battleResult == 1) {
                         System.out.println();
                         System.out.println("Anda Mendapat " + enemy.getReward() + " coin");
-                        player.addCoin();
+                        player.addCoin(enemy.getRewardValue());
+                        player.resetHp();
+                        enemy.resetHp();
                     } else {
                         player.decreaseLives();
                         System.out.println("Nyawa Anda Tersisa " + player.getLives());
@@ -80,6 +87,7 @@ public class Main {
                             case "1" -> {
                                 if (player.getAttack() < 30 && player.getCoin() >= 50) {
                                     player.setAttack(30);
+                                    player.resetHp();
                                     player.setMaxHp(80);
                                     player.decreaseCoin(50);
                                     System.out.println("Anda mendapatkan Wooden Sword!!");
@@ -92,6 +100,7 @@ public class Main {
                                 if (player.getAttack() < 40 && player.getCoin() >= 100) {
                                     player.setAttack(40);
                                     player.setMaxHp(110);
+                                    player.resetHp();
                                     player.decreaseCoin(100);
                                     System.out.println("Anda mendapatkan Iron Sword!!");
                                 } else {
@@ -103,6 +112,7 @@ public class Main {
                                 if (player.getAttack() < 55 && player.getCoin() >= 200) {
                                     player.setAttack(55);
                                     player.setMaxHp(160);
+                                    player.resetHp();
                                     player.decreaseCoin(200.5);
                                     System.out.println("Anda mendapatkan Golden Sword!!");
                                 } else {
@@ -114,6 +124,7 @@ public class Main {
                                 if (player.getAttack() < 70 && player.getCoin() >= 500) {
                                     player.setAttack(70);
                                     player.setMaxHp(310);
+                                    player.resetHp();
                                     player.decreaseCoin(500.5);
                                     System.out.println("Anda mendapatkan Diamond Sword!!");
                                 } else {
@@ -125,6 +136,7 @@ public class Main {
                                 if (player.getAttack() < 120 && player.getCoin() >= 1000) {
                                     player.setAttack(120);
                                     player.setMaxHp(560);
+                                    player.resetHp();
                                     player.decreaseCoin(1000);
                                     System.out.println("Anda mendapatkan Slayer Sword!!");
                                 } else {
@@ -158,6 +170,7 @@ public class Main {
                 case "q" -> {
                     System.out.println("------------------------- Terima Kasih Telah Bermain --------------------------");
                     System.out.println("===============================================================================");
+                    player.resetHp();
                     quit = true;
                 }
                 default -> {
@@ -186,7 +199,7 @@ public class Main {
             System.out.println("Turn " + turn);
             System.out.println("\t\t\t" + player.getName() + "\t\tVS\t\t" + enemy.getName());
             System.out.println("\t_______________________________________________________________");
-            System.out.println("\tHp   |\t\t" + player.getHp() + "/" + player.getMaxHp() + "\t\t\t\t" + enemy.getHp() + "/" + enemy.getMaxHp());
+            System.out.println("\tHp   |\t\t" + player.getHp() + "/" + player.getMaxHp() + "\t\t\t" + enemy.getHp() + "/" + enemy.getMaxHp());
             System.out.println("\tpower|\t\t" + player.getAttack() + "\t\t\t\t" + enemy.getAttack());
             System.out.println();
             System.out.println("[1] Menyerang (Damage " + player.getAttack() + ")\t[2] Healing (heal " + (player.getMaxHp() / 10) + ")\t[q] Menyerah");

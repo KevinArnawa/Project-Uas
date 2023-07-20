@@ -1,14 +1,20 @@
 abstract class Creature {
     private final String name;
-    private int maxHp;
+    private final int maxHp;
+    private int npc_Hp;
     private final int attack;
     private final int reward;
 
-    public Creature(String name, int maxHp, int attack, int reward) {
+    public Creature(String name, int maxHp,int npc_Hp, int attack, int reward) {
         this.name = name;
         this.maxHp = maxHp;
+        this.npc_Hp = npc_Hp;
         this.attack = attack;
         this.reward = reward;
+    }
+
+    public void resetHp() {
+        npc_Hp = maxHp;
     }
 
     public String getName() {
@@ -20,7 +26,7 @@ abstract class Creature {
     }
 
     public int getHp() {
-        return maxHp;
+        return npc_Hp;
     }
 
     public int getAttack() {
@@ -31,31 +37,47 @@ abstract class Creature {
         return reward;
     }
     public void takeDamage(int damage) {
-        maxHp -= damage;
-        if (maxHp < 0) {
-            maxHp = 0;
+        npc_Hp -= damage;
+        if (npc_Hp < 0) {
+            npc_Hp = 0;
         }
     }
+    public abstract int getRewardValue();
 
     public boolean isDefeated() {
-        return maxHp <= 0;
+        return npc_Hp <= 0;
     }
 }
 
 class Slime extends Creature {
     public Slime() {
-        super("Slime", 60, 20, 10);
+        super("Slime", 60,60, 20, 10);
+    }
+
+    @Override
+    public int getRewardValue() {
+        return getReward();
     }
 }
 
 class Wolf extends Creature {
     public Wolf() {
-        super("Wolf", 180, 35, 25);
+        super("Wolf", 180, 180,35, 25);
+    }
+
+    @Override
+    public int getRewardValue() {
+        return getReward();
     }
 }
 
 class Dragon extends Creature {
     public Dragon() {
-        super("Dragon", 600, 80, 50);
+        super("Dragon", 600,600, 80, 50);
+    }
+
+    @Override
+    public int getRewardValue() {
+        return getReward();
     }
 }
